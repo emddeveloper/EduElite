@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import {
   LuSchool,
   LuLayoutDashboard,
@@ -23,6 +24,7 @@ const nav = [
 ];
 
 export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const pathname = usePathname();
   useEffect(() => {
     if (!open) return;
     const onEsc = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -37,25 +39,40 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
         <div className="fixed inset-0 bg-black/40 z-30 md:hidden" onClick={onClose} />
       )}
       <aside
-        className={`fixed md:static z-40 h-dvh md:h-auto top-0 left-0 w-72 md:w-64 bg-white/90 dark:bg-neutral-900 border-r border-black/10 dark:border-white/10 transition-transform ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
+        className={`fixed md:static z-40 h-dvh md:h-auto top-0 left-0 w-72 md:w-64 text-white transition-transform ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
+        style={{
+          backgroundImage: "linear-gradient(180deg, #0f172a 0%, #0b1220 100%)",
+        }}
       >
-        <div className="flex items-center gap-2 p-4 border-b border-black/10 dark:border-white/10">
+        <div className="flex items-center gap-2 p-4 border-b border-white/10">
           <LuSchool className="text-[--color-primary]" size={24} />
           <div>
             <div className="font-semibold">EduElite</div>
-            <div className="text-xs text-neutral-500">School Management</div>
+            <div className="text-xs text-white/60">School Management</div>
           </div>
           <button className="md:hidden ml-auto" onClick={onClose} aria-label="Close sidebar">
             <LuX />
           </button>
         </div>
         <nav className="p-3 space-y-1">
-          {nav.map((item) => (
-            <Link key={item.href} href={item.href} className="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-black/5 dark:hover:bg-white/5">
-              <item.icon className="text-[--color-primary]" />
-              <span>{item.label}</span>
-            </Link>
-          ))}
+          {nav.map((item) => {
+            const active = pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 transition ${
+                  active
+                    ? "bg-[rgba(29,78,216,0.15)] text-white"
+                    : "text-white/80 hover:bg-white/5 hover:text-white"
+                }`}
+              >
+                <item.icon className={active ? "text-[--color-primary]" : "text-white/70"} />
+                <span className="flex-1">{item.label}</span>
+                {active && <span className="h-2 w-2 rounded-full bg-[--color-primary]" />}
+              </Link>
+            );
+          })}
         </nav>
       </aside>
     </>
