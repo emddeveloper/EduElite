@@ -3,11 +3,18 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* Theme colors */
+  --primary: #4A90E2; /* blue */
+  --secondary: #101828; /* dark slate */
+  --accent: #F43F5E; /* pink/red */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -16,6 +23,7 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --secondary: #0b1220;
   }
 }
 
@@ -23,4 +31,21 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Utilities */
+.card {
+  @apply rounded-xl bg-white/80 dark:bg-white/5 shadow-sm border border-black/5 dark:border-white/10;
+}
+.card-hover {
+  @apply transition hover:shadow-md;
+}
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-lg bg-[--color-primary] px-4 py-2 text-white shadow-sm hover:opacity-90 active:opacity-85;
+}
+.btn-secondary {
+  @apply inline-flex items-center justify-center rounded-lg bg-[--color-secondary] px-4 py-2 text-white/90 shadow-sm hover:opacity-90 active:opacity-85;
+}
+.input {
+  @apply w-full rounded-lg border border-black/10 dark:border-white/10 bg-white dark:bg-transparent px-3 py-2 outline-none focus:ring-2 focus:ring-[--color-primary];
 }
