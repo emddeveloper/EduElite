@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "seed:students": "node scripts/seed-students.js",
-    "seed:teachers": "node scripts/seed-teachers.js"
+    "seed:teachers": "node scripts/seed-teachers.js",
+    "seed:courses": "node scripts/seed-courses.js"
   },
   "dependencies": {
     "clsx": "^2.1.1",
