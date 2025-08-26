@@ -37,7 +37,7 @@ export interface IStudent {
   parent?: IParentInfo;
 
   // Flexible bag for future fields
-  meta?: Record<string, any>;
+  meta?: Record<string, unknown>;
 }
 
 const ParentSchema = new Schema<IParentInfo>(

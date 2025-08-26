@@ -111,7 +111,7 @@ export default function DashboardPage() {
       <div className="card p-4">
         <div className="font-semibold mb-2">Recent Activity</div>
         <ul className="space-y-2 text-sm text-neutral-600 dark:text-neutral-300">
-          <li>New student "Alice Johnson" enrolled to Grade 8</li>
+          <li>New student &quot;Alice Johnson&quot; enrolled to Grade 8</li>
           <li>Math assignment grades updated in Algebra I</li>
           <li>Attendance marked for Science - 2025-08-26</li>
         </ul>

@@ -2,14 +2,40 @@
 
 import React from "react";
 
-type AnyStudent = any;
+type StudentRow = {
+  _id?: string;
+  name: string;
+  email: string;
+  grade: string;
+  enrollmentDate?: string | number | Date;
+  parentContact?: string;
+  photoUrl?: string;
+  contactNo?: string;
+  gender?: string;
+  dob?: string | number | Date;
+  nationality?: string;
+  admissionNo?: string;
+  rollNo?: string;
+  bloodGroup?: string;
+  category?: string;
+  religion?: string;
+  studentAddress?: string;
+  addressSameAsStudent?: boolean;
+  parent?: {
+    name?: string;
+    email?: string;
+    mobile?: string;
+    occupation?: string;
+    address?: string;
+  };
+};
 
 type Props = {
-  students: AnyStudent[];
+  students: StudentRow[];
 };
 
 export default function StudentTable({ students }: Props) {
-  const [selected, setSelected] = React.useState<AnyStudent | null>(null);
+  const [selected, setSelected] = React.useState<StudentRow | null>(null);
   const [query, setQuery] = React.useState("");
   const [grade, setGrade] = React.useState<string>("All");
   const [page, setPage] = React.useState(1);
@@ -263,7 +289,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-function Field({ label, value, long }: { label: string; value?: any; long?: boolean }) {
+function Field({ label, value, long }: { label: string; value?: React.ReactNode; long?: boolean }) {
   return (
     <div>
       <div className="text-[11px] text-neutral-500">{label}</div>

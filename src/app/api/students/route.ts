@@ -10,9 +10,10 @@ export async function GET() {
     }
     const students = await Student.find().sort({ createdAt: -1 })
     return NextResponse.json({ data: students })
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Failed to fetch students'
     console.error('[GET /api/students] Error:', err)
-    return NextResponse.json({ error: err.message || 'Failed to fetch students' }, { status: 500 })
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }
 
@@ -67,15 +68,17 @@ export async function POST(req: Request) {
     try {
       const created = await Student.create(payload)
       return NextResponse.json({ data: created }, { status: 201 })
-    } catch (e: any) {
+    } catch (e: unknown) {
       // handle duplicate key error for unique email
-      if (e?.code === 11000) {
+      if (typeof e === 'object' && e !== null && 'code' in e && (e as { code?: number }).code === 11000) {
         return NextResponse.json({ error: 'A student with this email already exists.' }, { status: 409 })
       }
       throw e
     }
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Failed to create student'
     console.error('[POST /api/students] Error:', err)
-    return NextResponse.json({ error: err.message || 'Failed to create student' }, { status: 400 })
+    return NextResponse.json({ error: message }, { status: 400 })
   }
 }
+
