@@ -38,8 +38,21 @@ export default function NewCoursePage() {
         const res = await fetch("/api/teachers", { cache: "no-store" });
         if (!res.ok) throw new Error(`Failed to load teachers (${res.status})`);
         const j = await res.json();
-        if (!abort) setTeachers((j.data || []).map((t: any) => ({ _id: String(t._id), name: String(t.name || ""), email: t.email })));
-      } catch (e) {
+        if (!abort) {
+          const list: unknown = j.data || [];
+          if (Array.isArray(list)) {
+            setTeachers(
+              list.map((t: Record<string, unknown>) => ({
+                _id: String((t._id as string | number) ?? ""),
+                name: String(((t.name as string | undefined) ?? "")),
+                email: t.email as string | undefined,
+              }))
+            );
+          } else {
+            setTeachers([]);
+          }
+        }
+      } catch {
         // silent fail; assigning teacher is optional
         if (!abort) setTeachers([]);
       } finally {
