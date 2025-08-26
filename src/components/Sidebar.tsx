@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import {
   LuSchool,
   LuLayoutDashboard,
@@ -25,12 +26,35 @@ const nav = [
 
 export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
   const pathname = usePathname();
+  const { data } = useSession();
+  const sessionUser = (data as any)?.user as
+    | { role?: string; permissions?: { module: string; canView: boolean }[] }
+    | undefined;
   useEffect(() => {
     if (!open) return;
     const onEsc = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onEsc);
     return () => window.removeEventListener("keydown", onEsc);
   }, [open, onClose]);
+
+  // Map labels to permission.module keys used in DB
+  const labelToModule: Record<string, string> = {
+    Dashboard: "dashboard",
+    Students: "students",
+    Teachers: "teachers",
+    Courses: "courses",
+    Attendance: "attendance",
+    Grades: "grades",
+  };
+
+  const allowed = nav.filter((item) => {
+    // Admins see everything
+    if (sessionUser?.role === "admin") return true;
+    const moduleKey = labelToModule[item.label];
+    if (!moduleKey) return true; // default to visible if not mapped
+    const p = sessionUser?.permissions?.find((x) => x.module === moduleKey);
+    return !!p?.canView;
+  });
 
   return (
     <>
@@ -55,7 +79,7 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
           </button>
         </div>
         <nav className="p-3 space-y-1">
-          {nav.map((item) => {
+          {allowed.map((item) => {
             const active = pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href));
             return (
               <Link
