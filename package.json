@@ -9,7 +9,10 @@
     "lint": "eslint",
     "seed:students": "node scripts/seed-students.js",
     "seed:teachers": "node scripts/seed-teachers.js",
-    "seed:courses": "node scripts/seed-courses.js"
+    "seed:courses": "node scripts/seed-courses.js",
+    "seed:enrollments": "node scripts/seed-enrollments.js",
+    "seed:attendance": "node scripts/seed-attendance.js",
+    "seed:all": "npm run seed:teachers && npm run seed:students && npm run seed:courses && npm run seed:enrollments && npm run seed:attendance"
   },
   "dependencies": {
     "clsx": "^2.1.1",
