@@ -32,7 +32,10 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials) return null;
         const { identifier, password } = credentials as Record<string, string>;
-        await dbConnect();
+        const conn = await dbConnect();
+        if (!conn) {
+          throw new Error("Database not configured. Please set MONGODB_URI.");
+        }
         const user = (await User.findOne({
           $or: [{ email: identifier?.toLowerCase() }, { username: identifier }],
         })

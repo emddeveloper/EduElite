@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="EduElite Logo">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="50%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="32" fill="url(#g)"/>
+  <!-- Mortarboard cap icon -->
+  <g transform="translate(128 92)" fill="#fff">
+    <path d="M0-34L-70 0 0 34 70 0 0-34Z"/>
+    <path d="M-54 6v16c0 10 23 18 54 18s54-8 54-18V6L0 38-54 6Z" opacity="0.9"/>
+    <rect x="68" y="-2" width="8" height="40" rx="4" opacity="0.9"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="50%" y="200" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system" font-size="28" fill="#ffffff" font-weight="700">
+    EduElite
+  </text>
+</svg>
